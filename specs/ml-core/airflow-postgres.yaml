@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgresql-db
+---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: airflow-postgres
+  namespace: postgresql-db
+spec:
+  numberOfInstances: 1
+  postgresql:
+    version: "16"
+  teamId: mlops
+  volume:
+    size: 12Gi
+  users:
+    airflow:
+      - superuser
+      - createdb
+  databases:
+    airflow: airflow
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/service
+              operator: In
+              values:
+                - "true"

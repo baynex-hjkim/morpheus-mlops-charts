@@ -1,0 +1,119 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana-route
+  namespace: monitoring
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - grafana.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kube-prometheus-stack-grafana
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: airflow-route
+  namespace: airflow
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - airflow.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: airflow-webserver
+          port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-route
+  namespace: argocd
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - argocd.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: argocd-server
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: mlflow-route
+  namespace: mlflow
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - mlflow.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: mlflow
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nexus-route
+  namespace: nexus
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - nexus.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nexus-nexus-repository-manager
+          port: 8081
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prometheus-route
+  namespace: monitoring
+spec:
+  parentRefs:
+    - name: nginx
+      namespace: nginx-gateway
+  hostnames:
+    - prometheus.mlops.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kube-prometheus-stack-prometheus
+          port: 9090

@@ -1,0 +1,28 @@
+nfs:
+  kubeletDir: /var/lib/kubelet
+
+storage:
+  server: 10.50.30.211
+  share: /mlops2
+  mountOptions:
+    - nfsvers=3
+    - nconnect=8
+  classes:
+    - name: nfs-rwo-delete
+      reclaimPolicy: Delete
+      isDefault: true
+    - name: nfs-rwo-retain
+      reclaimPolicy: Retain
+      isDefault: false
+    - name: nfs-rwx-delete
+      reclaimPolicy: Delete
+      isDefault: false
+    - name: nfs-rwx-retain
+      reclaimPolicy: Retain
+      isDefault: false
+
+volumeSnapshotClass:
+  enabled: true
+  name: csi-nfs-snapclass
+  driver: nfs.csi.k8s.io
+  deletionPolicy: Delete

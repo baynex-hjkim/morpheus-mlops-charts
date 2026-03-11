@@ -1,0 +1,17 @@
+gpuOperator:
+  driver:
+    enabled: true
+  operator:
+    defaultRuntime: containerd
+  mig:
+    strategy: mixed
+  toolkit:
+    env:
+      - name: CONTAINERD_CONFIG
+        value: /var/lib/rancher/rke2/agent/etc/containerd/config.toml
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+      - name: CONTAINERD_RUNTIME_CLASS
+        value: nvidia
+      - name: RKE2_MODE
+        value: "true"

@@ -1,0 +1,15 @@
+githubAppSecret:
+  create: false
+  name: pre-defined-secret
+  namespace: arc-runners
+  appId: "__SET_IN_MORPHEUS__"
+  installationId: "__SET_IN_MORPHEUS__"
+  privateKey: |
+    __SET_IN_MORPHEUS__
+
+arcRunnerSet:
+  githubConfigUrl: https://github.com/mlops-pipeline
+  githubConfigSecret: pre-defined-secret
+  containerMode:
+    type: dind
+  minRunners: 1

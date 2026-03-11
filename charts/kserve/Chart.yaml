@@ -1,0 +1,15 @@
+apiVersion: v2
+name: kserve
+description: Morpheus wrapper chart for StradVision KServe installation.
+type: application
+version: 0.1.0
+appVersion: 0.16.0
+dependencies:
+  - name: kserve-crd
+    alias: kserveCrd
+    version: 0.16.0
+    repository: oci://ghcr.io/kserve/charts
+  - name: kserve
+    alias: kserve
+    version: 0.16.0
+    repository: oci://ghcr.io/kserve/charts

@@ -1,0 +1,17 @@
+kserveCrd: {}
+
+kserve:
+  kserve:
+    controller:
+      deploymentMode: Knative
+      gateway:
+        disableIstioVirtualHost: true
+        ingressGateway:
+          gateway: knative-serving/knative-ingress-gateway
+          className: kourier.ingress.networking.knative.dev
+
+sampleInferenceService:
+  enabled: false
+  namespace: ai
+  name: sklearn-iris
+  storageUri: gs://kfserving-examples/models/sklearn/1.0/model

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: argocd
+description: Morpheus wrapper chart for StradVision ArgoCD installation.
+type: application
+version: 0.1.0
+appVersion: 3.3.0
+dependencies:
+  - name: argo-cd
+    alias: argocd
+    version: 9.4.1
+    repository: https://argoproj.github.io/argo-helm

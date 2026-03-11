@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: knative-serving
+---
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+spec:
+  ingress:
+    kourier:
+      enabled: true
+  config:
+    network:
+      ingress-class: kourier.ingress.networking.knative.dev
+    domain:
+      mlops.local: ""
+    autoscaler:
+      stable-window: "60s"
+      enable-scale-to-zero: "true"
+  deployments:
+    - name: activator
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: autoscaler
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: autoscaler-hpa
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: controller
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: webhook
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: net-kourier-controller
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+    - name: 3scale-kourier-gateway
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"

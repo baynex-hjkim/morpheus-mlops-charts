@@ -1,0 +1,11 @@
+apiVersion: v2
+name: nginx-gateway-fabric
+description: Morpheus wrapper chart for StradVision NGINX Gateway Fabric installation.
+type: application
+version: 0.1.0
+appVersion: 2.3.0
+dependencies:
+  - name: nginx-gateway-fabric
+    alias: ngf
+    version: 2.3.0
+    repository: oci://ghcr.io/nginx/charts

@@ -1,0 +1,3 @@
+arcController:
+  nodeSelector:
+    node-role.kubernetes.io/service: "true"

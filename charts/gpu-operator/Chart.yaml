@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gpu-operator
+description: Morpheus wrapper chart for StradVision NVIDIA GPU Operator installation.
+type: application
+version: 0.1.0
+appVersion: 25.10.1
+dependencies:
+  - name: gpu-operator
+    alias: gpuOperator
+    version: 25.10.1
+    repository: https://helm.ngc.nvidia.com/nvidia

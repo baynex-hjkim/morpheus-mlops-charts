@@ -1,0 +1,11 @@
+apiVersion: v2
+name: knative-operator
+description: Morpheus wrapper chart for StradVision Knative operator installation.
+type: application
+version: 0.1.0
+appVersion: 1.21.0
+dependencies:
+  - name: knative-operator
+    alias: knativeOperator
+    version: 1.21.0
+    repository: https://knative.github.io/operator

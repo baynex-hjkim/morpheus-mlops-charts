@@ -1,0 +1,99 @@
+kubePrometheusStack:
+  grafana:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+    service:
+      type: ClusterIP
+    adminPassword: "__SET_IN_MORPHEUS__"
+    additionalDataSources:
+      - name: Loki
+        type: loki
+        uid: loki
+        access: proxy
+        url: http://loki-gateway.monitoring.svc.cluster.local
+        isDefault: false
+  prometheusOperator:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+  kube-state-metrics:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+  alertmanager:
+    alertmanagerSpec:
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+  prometheus:
+    prometheusSpec:
+      nodeSelector:
+        node-role.kubernetes.io/service: "true"
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: nfs-rwo-delete
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 100Gi
+
+loki:
+  deploymentMode: SingleBinary
+  loki:
+    auth_enabled: false
+    commonConfig:
+      replication_factor: 1
+    storage:
+      type: filesystem
+    schemaConfig:
+      configs:
+        - from: "2024-01-01"
+          store: tsdb
+          object_store: filesystem
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
+  singleBinary:
+    replicas: 1
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+    persistence:
+      enabled: true
+      storageClass: nfs-rwo-delete
+      accessModes:
+        - ReadWriteOnce
+      size: 100Gi
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+  simpleScalable:
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+  monitoring:
+    serviceMonitor:
+      enabled: true
+  gateway:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+    nginxConfig:
+      resolver: rke2-coredns-rke2-coredns.kube-system.svc.cluster.local
+
+fluentBit:
+  config:
+    outputs: |
+      [OUTPUT]
+          Name loki
+          Match *
+          Host loki-gateway.monitoring.svc
+          Port 80
+          Labels job=fluentbit
+          Auto_Kubernetes_Labels on
+  serviceMonitor:
+    enabled: true

@@ -1,0 +1,3 @@
+kuberayOperator:
+  nodeSelector:
+    node-role.kubernetes.io/service: "true"

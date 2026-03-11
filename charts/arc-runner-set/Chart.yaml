@@ -1,0 +1,11 @@
+apiVersion: v2
+name: arc-runner-set
+description: Morpheus wrapper chart for StradVision ARC runner set installation.
+type: application
+version: 0.1.0
+appVersion: 0.13.1
+dependencies:
+  - name: gha-runner-scale-set
+    alias: arcRunnerSet
+    version: 0.13.1
+    repository: oci://ghcr.io/actions/actions-runner-controller-charts

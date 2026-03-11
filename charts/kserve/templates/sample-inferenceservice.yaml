@@ -1,0 +1,25 @@
+{{- if .Values.sampleInferenceService.enabled }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.sampleInferenceService.namespace }}
+---
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: {{ .Values.sampleInferenceService.name }}
+  namespace: {{ .Values.sampleInferenceService.namespace }}
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: {{ .Values.sampleInferenceService.storageUri | quote }}
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          cpu: "1"
+          memory: 1Gi
+{{- end }}

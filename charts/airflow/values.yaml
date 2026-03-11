@@ -1,0 +1,46 @@
+secrets:
+  airflowDb:
+    create: false
+    name: airflow-db-secret
+    namespace: airflow
+    connection: "__SET_IN_MORPHEUS__"
+  gitCredentials:
+    create: false
+    name: git-credentials
+    namespace: airflow
+    username: "__SET_IN_MORPHEUS__"
+    password: "__SET_IN_MORPHEUS__"
+  kubeconfig:
+    create: false
+    name: kubeconfig
+    namespace: airflow
+    config: |
+      __SET_IN_MORPHEUS__
+
+airflow:
+  nodeSelector:
+    node-role.kubernetes.io/service: "true"
+  postgresql:
+    enabled: false
+  data:
+    metadataSecretName: airflow-db-secret
+  config:
+    api:
+      auth_backend: airflow.api.auth.backend.basic_auth
+  webserver:
+    defaultUser:
+      enabled: true
+      username: admin
+      password: "__SET_IN_MORPHEUS__"
+      role: Admin
+  dags:
+    gitSync:
+      enabled: true
+      repo: https://github.com/mlops-pipeline/sv-mlops-workflows.git
+      branch: main
+      rev: HEAD
+      ref: main
+      depth: 1
+      maxFailures: 0
+      subPath: dags
+      credentialsSecret: git-credentials

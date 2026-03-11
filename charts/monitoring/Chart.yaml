@@ -1,0 +1,18 @@
+apiVersion: v2
+name: monitoring
+description: Morpheus wrapper chart for StradVision monitoring stack installation.
+type: application
+version: 0.1.0
+dependencies:
+  - name: kube-prometheus-stack
+    alias: kubePrometheusStack
+    version: 81.6.1
+    repository: https://prometheus-community.github.io/helm-charts
+  - name: loki
+    alias: loki
+    version: 6.53.0
+    repository: https://grafana.github.io/helm-charts
+  - name: fluent-bit
+    alias: fluentBit
+    version: 0.55.0
+    repository: https://fluent.github.io/helm-charts

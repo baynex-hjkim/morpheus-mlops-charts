@@ -1,0 +1,11 @@
+apiVersion: v2
+name: csi-driver-nfs
+description: Morpheus wrapper chart for StradVision NFS CSI installation.
+type: application
+version: 0.1.0
+appVersion: 4.12.1
+dependencies:
+  - name: csi-driver-nfs
+    alias: nfs
+    version: 4.12.1
+    repository: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts

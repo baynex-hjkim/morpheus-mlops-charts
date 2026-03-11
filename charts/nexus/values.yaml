@@ -1,0 +1,10 @@
+nexus:
+  image:
+    tag: 3.70.1
+  persistence:
+    enabled: true
+    storageSize: 50Gi
+    storageClass: nfs-rwo-delete
+  nexus:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"

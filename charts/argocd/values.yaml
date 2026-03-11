@@ -1,0 +1,9 @@
+argocd:
+  server:
+    insecure: true
+    extraArgs:
+      - --insecure
+  global:
+    domain: argocd.mlops.local
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"

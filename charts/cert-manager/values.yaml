@@ -1,0 +1,6 @@
+certManager:
+  crds:
+    enabled: true
+  global:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"

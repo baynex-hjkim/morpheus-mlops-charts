@@ -1,0 +1,19 @@
+metallb:
+  controller:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+
+ipAddressPool:
+  enabled: true
+  name: default-pool
+  namespace: metallb-system
+  addresses:
+    - 192.168.1.76-192.168.1.77
+    - 192.168.1.115-192.168.1.120
+
+l2Advertisement:
+  enabled: true
+  name: l2-pool
+  namespace: metallb-system
+  ipAddressPools:
+    - default-pool

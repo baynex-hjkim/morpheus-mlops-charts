@@ -1,0 +1,22 @@
+ngf:
+  nginxGateway:
+    nodeSelector:
+      node-role.kubernetes.io/service: "true"
+  nginx:
+    service:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.77
+
+gatewayClass:
+  enabled: true
+  name: nginx
+  controllerName: gateway.nginx.org/nginx-gateway-controller
+
+gateway:
+  enabled: true
+  name: nginx
+  namespace: nginx-gateway
+  gatewayClassName: nginx
+  hostname: "*.mlops.local"
+  enableHttps: false
+  tlsSecretName: ai-stradvision-tls

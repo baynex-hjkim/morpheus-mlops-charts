@@ -1,0 +1,11 @@
+apiVersion: v2
+name: nexus
+description: Morpheus wrapper chart for StradVision Nexus installation.
+type: application
+version: 0.1.0
+appVersion: 3.64.0
+dependencies:
+  - name: nexus-repository-manager
+    alias: nexus
+    version: 64.2.0
+    repository: https://sonatype.github.io/helm3-charts/

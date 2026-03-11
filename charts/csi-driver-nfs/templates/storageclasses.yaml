@@ -1,0 +1,28 @@
+{{- range .Values.storage.classes }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .name }}
+  {{- if .isDefault }}
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  {{- end }}
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: {{ $.Values.storage.server | quote }}
+  share: {{ $.Values.storage.share | quote }}
+reclaimPolicy: {{ .reclaimPolicy }}
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+mountOptions:
+{{ toYaml $.Values.storage.mountOptions | indent 2 }}
+---
+{{- end }}
+{{- if .Values.volumeSnapshotClass.enabled }}
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: {{ .Values.volumeSnapshotClass.name }}
+driver: {{ .Values.volumeSnapshotClass.driver }}
+deletionPolicy: {{ .Values.volumeSnapshotClass.deletionPolicy }}
+{{- end }}

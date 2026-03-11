@@ -1,0 +1,31 @@
+s3Secret:
+  create: false
+  name: mlflow-s3-secret
+  namespace: mlflow
+  accessKeyId: "__SET_IN_MORPHEUS__"
+  secretAccessKey: "__SET_IN_MORPHEUS__"
+  endpointUrl: deg.hcpg.stradvision.com
+
+mlflow:
+  nodeSelector:
+    node-role.kubernetes.io/service: "true"
+  artifactRoot:
+    s3:
+      enabled: true
+      bucket: mlopsmlflow
+      existingSecret:
+        name: mlflow-s3-secret
+        keyOfAccessKeyId: AWS_ACCESS_KEY_ID
+        keyOfSecretAccessKey: AWS_SECRET_ACCESS_KEY
+  backendStore:
+    postgres:
+      enabled: true
+      host: mlflow-postgres.postgresql-db.svc.cluster.local
+      port: 5432
+      database: mlflow
+      user: mlflow
+      password: "__SET_IN_MORPHEUS__"
+  extraEnvVars:
+    MLFLOW_S3_ENDPOINT_URL: deg.hcpg.stradvision.com
+    MLFLOW_S3_IGNORE_TLS: "true"
+    MLFLOW_SERVER_ALLOWED_HOSTS: mlflow.mlops.local

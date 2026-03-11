@@ -1,0 +1,11 @@
+apiVersion: v2
+name: airflow
+description: Morpheus wrapper chart for StradVision Airflow installation.
+type: application
+version: 0.1.0
+appVersion: 2.8.3
+dependencies:
+  - name: airflow
+    alias: airflow
+    version: 1.13.1
+    repository: https://airflow.apache.org
