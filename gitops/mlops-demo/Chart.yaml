@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mlops-demo
+description: Demo application for the Morpheus MLOps CI/CD pipeline
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

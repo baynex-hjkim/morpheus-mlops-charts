@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: harbor.morpheus.test/mlops/mlops-demo
+  tag: "latest"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: harbor-pull-secret
+
+service:
+  port: 8080
+
+route:
+  enabled: true
+  hostname: mlops-demo.morpheus.test
+  gatewayName: nginx-gateway
+  gatewayNamespace: nginx-gateway
+  sectionName: https
