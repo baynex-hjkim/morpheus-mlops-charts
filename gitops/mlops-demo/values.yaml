@@ -11,7 +11,7 @@ imagePullSecrets:
 
 job:
   entrypoint: "python -m src.train"
-  shutdownAfterJobFinishes: true
+  shutdownAfterJobFinishes: false
   ttlSecondsAfterFinished: 3600
   backoffLimit: 0
 
