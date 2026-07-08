@@ -24,6 +24,10 @@ spec:
   submitterPodTemplate:
     spec:
       restartPolicy: Never
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       containers:
@@ -47,6 +51,10 @@ spec:
 {{ toYaml .Values.commonLabels | indent 12 }}
             ray-dashboard: {{ printf "%s-%s" (.Values.appName | toString) (.Values.runId | toString) | trunc 63 | trimSuffix "-" | quote }}
         spec:
+          dnsConfig:
+            options:
+              - name: ndots
+                value: "1"
           imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 12 }}
           containers:
@@ -79,6 +87,10 @@ spec:
 {{ include "mlops-demo.labels" . | indent 14 }}
 {{ toYaml .Values.commonLabels | indent 14 }}
           spec:
+            dnsConfig:
+              options:
+                - name: ndots
+                  value: "1"
             imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 14 }}
             containers:
