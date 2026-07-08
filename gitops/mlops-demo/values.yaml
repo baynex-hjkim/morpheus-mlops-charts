@@ -1,9 +1,9 @@
 appName: ray-mlops-demo
-runId: latest
+runId: 7083054
 
 image:
   repository: harbor.morpheus.test/mlops/ray-mlops-demo
-  tag: "latest"
+  tag: "7083054"
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
