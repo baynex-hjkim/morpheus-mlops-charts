@@ -7,8 +7,8 @@ metadata:
 {{ toYaml .Values.commonLabels | indent 4 }}
 spec:
   entrypoint: {{ .Values.job.entrypoint | quote }}
-  shutdownAfterJobFinishes: {{ .Values.job.shutdownAfterJobFinishes }}
 {{- if .Values.job.shutdownAfterJobFinishes }}
+  shutdownAfterJobFinishes: true
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
 {{- end }}
   submissionMode: K8sJobMode
