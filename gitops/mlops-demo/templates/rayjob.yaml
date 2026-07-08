@@ -11,6 +11,7 @@ spec:
 {{- if .Values.job.shutdownAfterJobFinishes }}
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
 {{- end }}
+  submissionMode: K8sJobMode
   backoffLimit: {{ .Values.job.backoffLimit }}
   runtimeEnvYAML: |
     env_vars:
@@ -82,6 +83,7 @@ spec:
         replicas: {{ .Values.worker.replicas }}
         minReplicas: 0
         maxReplicas: {{ .Values.worker.replicas }}
+        numOfHosts: 1
         rayStartParams: {}
         template:
           metadata:
