@@ -43,3 +43,10 @@ env:
 commonLabels:
   app.kubernetes.io/part-of: mlops-training
   app.kubernetes.io/component: ray-mlops-demo
+
+dashboard:
+  enabled: true
+  host: ray-mlops-demo.morpheus.test
+  gatewayName: nginx-gateway
+  gatewayNamespace: nginx-gateway
+  sectionName: https

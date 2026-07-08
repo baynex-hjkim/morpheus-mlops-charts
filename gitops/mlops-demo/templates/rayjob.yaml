@@ -45,6 +45,7 @@ spec:
           labels:
 {{ include "mlops-demo.labels" . | indent 12 }}
 {{ toYaml .Values.commonLabels | indent 12 }}
+            ray-dashboard: {{ printf "%s-%s" (.Values.appName | toString) (.Values.runId | toString) | trunc 63 | trimSuffix "-" | quote }}
         spec:
           imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 12 }}
