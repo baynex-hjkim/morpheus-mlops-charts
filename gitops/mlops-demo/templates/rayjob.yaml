@@ -1,7 +1,7 @@
 apiVersion: ray.io/v1
 kind: RayJob
 metadata:
-  name: {{ printf "%s-%s" .Values.appName .Values.runId | trunc 63 | trimSuffix "-" | quote }}
+  name: {{ printf "%s-%s" (.Values.appName | toString) (.Values.runId | toString) | trunc 63 | trimSuffix "-" | quote }}
   labels:
 {{ include "mlops-demo.labels" . | indent 4 }}
 {{ toYaml .Values.commonLabels | indent 4 }}

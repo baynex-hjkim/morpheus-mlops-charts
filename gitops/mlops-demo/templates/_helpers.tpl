@@ -11,8 +11,8 @@
 {{- end -}}
 
 {{- define "mlops-demo.labels" -}}
-app.kubernetes.io/name: {{ include "mlops-demo.name" . }}
-app.kubernetes.io/instance: {{ .Values.runId | default .Release.Name }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+app.kubernetes.io/name: {{ include "mlops-demo.name" . | quote }}
+app.kubernetes.io/instance: {{ .Values.runId | default .Release.Name | toString | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | quote }}
 {{- end -}}
