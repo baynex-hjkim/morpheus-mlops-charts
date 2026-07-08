@@ -1,4 +1,4 @@
-{{- if .Values.dashboard.enabled }}
+{{- if .Values.httproute.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -24,11 +24,11 @@ metadata:
 {{ toYaml .Values.commonLabels | indent 4 }}
 spec:
   parentRefs:
-    - name: {{ .Values.dashboard.gatewayName | quote }}
-      namespace: {{ .Values.dashboard.gatewayNamespace | quote }}
-      sectionName: {{ .Values.dashboard.sectionName | quote }}
+    - name: {{ .Values.httproute.gatewayName | quote }}
+      namespace: {{ .Values.httproute.gatewayNamespace | quote }}
+      sectionName: {{ .Values.httproute.sectionName | quote }}
   hostnames:
-    - {{ .Values.dashboard.host | quote }}
+    - {{ .Values.httproute.hostname | quote }}
   rules:
     - matches:
         - path:
