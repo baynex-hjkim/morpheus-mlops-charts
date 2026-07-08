@@ -8,7 +8,9 @@ metadata:
 spec:
   entrypoint: {{ .Values.job.entrypoint | quote }}
   shutdownAfterJobFinishes: {{ .Values.job.shutdownAfterJobFinishes }}
+{{- if .Values.job.shutdownAfterJobFinishes }}
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+{{- end }}
   backoffLimit: {{ .Values.job.backoffLimit }}
   runtimeEnvYAML: |
     env_vars:
