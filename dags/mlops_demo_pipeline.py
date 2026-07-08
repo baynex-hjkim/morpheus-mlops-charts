@@ -17,8 +17,10 @@ def mlops_demo_pipeline():
         return {
             "source_repo": "baynex-hjkim/morpheus-mlops-training",
             "charts_repo": "baynex-hjkim/morpheus-mlops-charts",
-            "image": "harbor.morpheus.test/mlops/mlops-demo",
-            "deployment": "argocd/mlops-demo",
+            "image": "harbor.morpheus.test/mlops/ray-mlops-demo",
+            "gitops_path": "gitops/mlops-demo",
+            "rayjob": "mlops-demo/ray-mlops-demo-<short-sha>",
+            "argocd_application": "argocd/mlops-demo",
         }
 
     report_pipeline_contract()

@@ -1,0 +1,93 @@
+apiVersion: ray.io/v1
+kind: RayJob
+metadata:
+  name: {{ printf "%s-%s" .Values.appName .Values.runId | trunc 63 | trimSuffix "-" | quote }}
+  labels:
+{{ include "mlops-demo.labels" . | indent 4 }}
+{{ toYaml .Values.commonLabels | indent 4 }}
+spec:
+  entrypoint: {{ .Values.job.entrypoint | quote }}
+  shutdownAfterJobFinishes: {{ .Values.job.shutdownAfterJobFinishes }}
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  backoffLimit: {{ .Values.job.backoffLimit }}
+  runtimeEnvYAML: |
+    env_vars:
+      MLFLOW_TRACKING_URI: {{ .Values.mlflow.trackingUri | quote }}
+      MLFLOW_EXPERIMENT_NAME: {{ .Values.mlflow.experimentName | quote }}
+      RUN_NAME_PREFIX: {{ .Values.env.runNamePrefix | quote }}
+      IMAGE_TAG: {{ .Values.image.tag | quote }}
+      RUN_ID: {{ .Values.runId | quote }}
+      S3_ENDPOINT_URL: {{ .Values.s3.endpointUrl | quote }}
+      MLFLOW_S3_ENDPOINT_URL: {{ .Values.s3.endpointUrl | quote }}
+      S3_BUCKET: {{ .Values.s3.bucket | quote }}
+      AWS_DEFAULT_REGION: {{ .Values.s3.region | quote }}
+  submitterPodTemplate:
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+      containers:
+        - name: ray-job-submitter
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- if .Values.s3.secretName }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.s3.secretName | quote }}
+{{- end }}
+  rayClusterSpec:
+    rayVersion: {{ .Values.ray.version | quote }}
+    headGroupSpec:
+      rayStartParams:
+        dashboard-host: "0.0.0.0"
+      template:
+        metadata:
+          labels:
+{{ include "mlops-demo.labels" . | indent 12 }}
+{{ toYaml .Values.commonLabels | indent 12 }}
+        spec:
+          imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 12 }}
+          containers:
+            - name: ray-head
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              ports:
+                - containerPort: 6379
+                  name: gcs-server
+                - containerPort: 8265
+                  name: dashboard
+                - containerPort: 10001
+                  name: client
+              resources:
+                requests:
+                  cpu: {{ .Values.head.cpu | quote }}
+                  memory: {{ .Values.head.memory | quote }}
+                limits:
+                  cpu: {{ .Values.head.cpu | quote }}
+                  memory: {{ .Values.head.memory | quote }}
+    workerGroupSpecs:
+      - groupName: cpu-workers
+        replicas: {{ .Values.worker.replicas }}
+        minReplicas: 0
+        maxReplicas: {{ .Values.worker.replicas }}
+        rayStartParams: {}
+        template:
+          metadata:
+            labels:
+{{ include "mlops-demo.labels" . | indent 14 }}
+{{ toYaml .Values.commonLabels | indent 14 }}
+          spec:
+            imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 14 }}
+            containers:
+              - name: ray-worker
+                image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+                imagePullPolicy: {{ .Values.image.pullPolicy }}
+                resources:
+                  requests:
+                    cpu: {{ .Values.worker.cpu | quote }}
+                    memory: {{ .Values.worker.memory | quote }}
+                  limits:
+                    cpu: {{ .Values.worker.cpu | quote }}
+                    memory: {{ .Values.worker.memory | quote }}

@@ -19,3 +19,8 @@ Morpheus appliance가 외부 chart repo에 접근하지 못하면 아래 중 하
 
 - `kube-vip`: MKS가 클러스터 lifecycle을 담당하므로 수동 control-plane VIP bootstrap을 그대로 이식하지 않음
 - `rke2-installation`: MKS가 대체하므로 수동 RKE2 설치 문서는 변환 대상에서 제외
+
+## GitOps demo
+
+- `gitops/mlops-demo`: GitHub Actions에서 이미지 tag와 RayJob 이름을 갱신하는 KubeRay `RayJob` chart
+- `dags/mlops_demo_pipeline.py`: Airflow에서 사용할 파이프라인 계약 메타데이터 예시
