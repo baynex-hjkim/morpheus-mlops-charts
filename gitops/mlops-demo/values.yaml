@@ -40,6 +40,12 @@ s3:
 env:
   runNamePrefix: ray-mlops-demo
 
+train:
+  candidates: "20:2,50:3,100:4,120:none"
+
+model:
+  bucket: mlops-demo-models
+
 commonLabels:
   app.kubernetes.io/part-of: mlops-training
   app.kubernetes.io/component: ray-mlops-demo

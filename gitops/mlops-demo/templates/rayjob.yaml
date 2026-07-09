@@ -23,6 +23,9 @@ spec:
       S3_ENDPOINT_URL: {{ .Values.s3.endpointUrl | quote }}
       MLFLOW_S3_ENDPOINT_URL: {{ .Values.s3.endpointUrl | quote }}
       S3_BUCKET: {{ .Values.s3.bucket | quote }}
+      MODEL_BUCKET: {{ .Values.model.bucket | quote }}
+      MODEL_PREFIX: {{ printf "runs/%s" (.Values.runId | toString) | quote }}
+      TRAIN_CANDIDATES: {{ .Values.train.candidates | quote }}
       AWS_DEFAULT_REGION: {{ .Values.s3.region | quote }}
   submitterPodTemplate:
     spec:
