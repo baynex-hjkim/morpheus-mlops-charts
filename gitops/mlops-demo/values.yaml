@@ -35,7 +35,7 @@ s3:
   endpointUrl: http://minio.minio.svc.cluster.local:9000
   bucket: ray
   region: ap-northeast-2
-  secretName: ""
+  secretName: mlflow-s3-env
 
 env:
   runNamePrefix: ray-mlops-demo
