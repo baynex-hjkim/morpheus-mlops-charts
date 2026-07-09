@@ -64,6 +64,11 @@ spec:
             - name: ray-head
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- if .Values.s3.secretName }}
+              envFrom:
+                - secretRef:
+                    name: {{ .Values.s3.secretName | quote }}
+{{- end }}
               ports:
                 - containerPort: 6379
                   name: gcs-server
@@ -101,6 +106,11 @@ spec:
               - name: ray-worker
                 image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
                 imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- if .Values.s3.secretName }}
+                envFrom:
+                  - secretRef:
+                      name: {{ .Values.s3.secretName | quote }}
+{{- end }}
                 resources:
                   requests:
                     cpu: {{ .Values.worker.cpu | quote }}
