@@ -28,7 +28,7 @@ worker:
   memory: "2Gi"
 
 mlflow:
-  trackingUri: http://mlflow.mlflow.svc.cluster.local
+  trackingUri: http://mlflow.mlflow.svc.cluster.local:5000
   experimentName: ray-mlops-demo
 
 s3:
