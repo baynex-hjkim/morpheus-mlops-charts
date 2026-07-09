@@ -1,9 +1,9 @@
 appName: ray-mlops-demo
-runId: "dbdd5f5"
+runId: "656d5b1"
 
 image:
   repository: harbor.morpheus.test/mlops/ray-mlops-demo
-  tag: "dbdd5f5"
+  tag: "656d5b1"
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
